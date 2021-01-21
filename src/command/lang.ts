@@ -23,7 +23,7 @@ const langCmd : CommandCallback<'lang'> = async (
       ts(channel, 'noSuchLang', { language });
       return;
     }
-    setLang(channel.id, language);
+    await setLang(channel.guild.id, language);
     ts(channel, 'langSuccess');
   }
 };
