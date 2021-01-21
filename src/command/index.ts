@@ -15,6 +15,7 @@ import { getMemberFromId } from '../discord';
 import {
   BotCommand, CommandDefinition, CommandOptions, FunctionParams,
 } from './type';
+import lang from './lang';
 
 const CmdList : {
     [key in BotCommand]: CommandDefinition<key>
@@ -30,6 +31,12 @@ const CmdList : {
     f: announce,
     perms: ['isAdmin'],
     args: ['channel'],
+    minArgs: 1,
+  },
+  lang: {
+    f: lang,
+    perms: ['isAdmin'],
+    args: [],
     minArgs: 0,
   },
 };
@@ -115,7 +122,12 @@ const runCommand = async (
   if (commandArgs.findIndex((arg) => !arg) !== -1) return;
   // Run the command, recombining the lines from before
   // We cast the command arguments.
-  cmd.f(channel, commandArgs as FunctionParams<typeof verb>, options, message);
+  cmd.f(
+    channel,
+    (commandArgs.length > 0 ? commandArgs : args) as FunctionParams<typeof verb>,
+    options,
+    message,
+  );
 };
 
 export default runCommand;

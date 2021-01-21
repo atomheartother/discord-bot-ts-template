@@ -6,8 +6,9 @@ const langs : {
     [key:string]: FluentBundle
 } = {};
 
+export const supportedLangs = process.env.SUPPORTED_LANG.split(' ');
+
 {
-  const supportedLangs = process.env.SUPPORTED_LANG.split(' ');
   const langDir = process.env.LANG_DIR;
   const globalConf = new FluentResource(fs
     .readFileSync(`${langDir}/global.ftl`, 'utf8')

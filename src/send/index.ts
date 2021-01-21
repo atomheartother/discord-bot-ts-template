@@ -1,5 +1,6 @@
 import { FluentVariable } from '@fluent/bundle';
 import { TextChannel, MessageOptions, DiscordAPIError } from 'discord.js';
+import { getGuildInfo } from '../db';
 import i18n from '../i18n';
 import log from '../utils/log';
 import handleError from './handleError';
@@ -19,11 +20,14 @@ const send = async (channel : TextChannel, content: BotMessage) : Promise<number
   return 0;
 };
 
-export const ts = (
+export const ts = async (
   channel: TextChannel,
   key: string,
   options: Record<string, FluentVariable> = {},
-) : Promise<number> => send(channel, i18n('en', key, options));
+) : Promise<number> => {
+  const { prefix } = await getGuildInfo(channel.guild.id);
+  return send(channel, i18n('en', key, { ...options, prefix }));
+};
 
 export const eb = (
   channel: TextChannel,

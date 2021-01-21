@@ -19,6 +19,13 @@ helpIntro =
     Here's a few things you can do:
 
 ## Usage strings
+usage-announce =
+    `{$prefix}announce <channel>`
+    Set the channel {-bot-name} uses to talk to the staff.
+
+usage-lang =
+    `{$prefix}lang [language]`
+    List available languages, set a language for this server.
 
 # Errors
 ## Resolution errors
@@ -52,3 +59,16 @@ notTextChannel =
 announceSuccess =
     {-b}Announcement channel set!{-b}
     I will now post my announcements in <{-h}{$channel}>.
+
+## Lang
+noSuchLang = 
+    {-b}{$language} isn't a valid language!{-b}
+    Use `{$prefix}lang` to get a list of supported languages.
+
+langSuccess =
+    {-b}Language changed successfully!{-b}
+    I'll now speak English :o
+
+langHeader = {-b}List/set server language{-b}
+langIntro = Use `{$prefix}lang <language>` to set server language.
+i18nCredits = English, by Liz <3

@@ -6,6 +6,7 @@ import { Argument } from './args';
 
 export type BotCommand =
     'help'
+    | 'lang'
     | 'announce';
 
 export type CommandOptions = {

@@ -11,6 +11,7 @@ import {
   getGuildInfo as SQLgetGuildInfo,
   GuildInfo,
   setGuildInfo as SQLsetGuildInfo,
+  setLang as SQLsetLang,
 } from './guilds';
 // Common
 export const initDatabase = init;
@@ -19,6 +20,8 @@ export const initDatabase = init;
 export const deleteMember = rmMember;
 
 // Guilds
+export const setLang = SQLsetLang;
+
 export const getGuildInfo = async (guildid: string): Promise<GuildInfo & {prefix: string}> => {
   let res: GuildInfo = await SQLgetGuildInfo(guildid);
   if (!res) {
@@ -30,6 +33,9 @@ export const getGuildInfo = async (guildid: string): Promise<GuildInfo & {prefix
   }
   if (!res.prefix) {
     res.prefix = process.env.PREFIX;
+  }
+  if (!res.lang) {
+    res.lang = process.env.DEFAULT_LANG;
   }
   return res;
 };
