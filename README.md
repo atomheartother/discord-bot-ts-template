@@ -4,12 +4,14 @@ Templatebot is a bot that's a template for a large-scale Typescript + NodeJS bot
 It uses modern Javascript and sets you up with a bunch of good architecture so your bot can grow without being too much of a mess.
 
 ## Features
+- The flexibility of a Javascript bot with the strict typing of Typescript!
 - A full command parser which handles multiple words surrounded by quotes, options and flags.
 - Per-server prefixed, languages and announcement channels.
 - A complex and extensible argument system that lets you define your own data types to send to your commands.
 - Industry-grade internationalization using Mozilla's [Project Fluent](https://www.projectfluent.org/play/).
 - A ready-to-use database system with postgreSQL
 - Docker deployment out of the box.
+- A custom paginated embed system.
 
 ## Installation
 
