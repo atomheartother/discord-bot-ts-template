@@ -1,7 +1,3 @@
-# Variables
--user =  <user ID/mention>
--char =  <character name/mention/role ID>
-
 # Help messages
 ## General
 ### This is displayed when the bot is pinged
@@ -11,7 +7,7 @@ prefixUsage =
     If you don't know how to use me, start with: `{$prefix}help`.
 
 ### This is in the help message header
-helpHeader = {-bot-name} - the roleplay server manager
+helpHeader = {-bot-name} - the future awesome bot
 
 ### The main help message body, followed by usage
 helpIntro =
@@ -30,7 +26,7 @@ usage-lang =
 # Errors
 ## Resolution errors
 noSuchMember =
-    {-b}I couldn't find a member from `{$member}`.{-b}
+    {-b}I couldn't find a member from `{$member} on this server`.{-b}
     Either they're not in this server or this is the wrong name/id!
 
 noSuchChannel =
@@ -40,15 +36,15 @@ noSuchChannel =
 ## Permission fails
 isAdminPermFail =
     {-b}You're not an admin!{-b}
-    You have to be an admin to run `{$command}`!
+    You have to be an admin to run `{$prefix}{$command}`!
 
 isServerModPermFail =
     {-b}You're not a moderator!{-b}
-    You have to be a mod to run `{$command}`!
+    You have to be a mod to run `{$prefix}{$command}`!
 
 manageRolesPermFail =
     {-b}You can't manage user roles!{-b}
-    You have to have powers to manage roles to run `{$command}`!
+    You have to have powers to manage roles to run `{$prefix}{$command}`!
 
 # Commands
 ## Announce
