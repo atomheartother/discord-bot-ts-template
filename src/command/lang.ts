@@ -15,7 +15,7 @@ const langCmd : CommandCallback<'lang'> = async (
       .setTitle(i18n(lang, 'langHeader'))
       .setDescription(i18n(lang, 'langIntro', { prefix }));
     supportedLangs.forEach((l) => {
-      embed.addField(lang === l ? `**${l}**` : l, i18n(l, 'i18nCredits'));
+      embed.addField(lang === l ? `${l}*` : l, i18n(l, 'i18nCredits'));
     });
     eb(channel, embed);
   } else {
