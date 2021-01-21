@@ -13,6 +13,7 @@ import {
   setGuildInfo as SQLsetGuildInfo,
   setLang as SQLsetLang,
 } from './guilds';
+
 // Common
 export const initDatabase = init;
 

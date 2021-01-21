@@ -10,6 +10,9 @@ export const init = () : void => {
 
 export const pool = () : Pool => poolObject;
 
+// Use getint to grab large IDs from the database
+// They are stored as ints, and this is good, but JS
+// has a limited size on ints, so we need to extract them as strings.
 export const getInt = (
   val : string,
   alias : string = val,
