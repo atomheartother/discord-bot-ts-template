@@ -10,6 +10,7 @@ import argumentParser, { PossibleArgumentResults } from './args';
 import help from './help';
 import { ts } from '../send';
 import announce from './announce';
+import setprefix from './setprefix';
 
 import { getMemberFromId } from '../discord';
 import {
@@ -17,6 +18,11 @@ import {
 } from './type';
 import lang from './lang';
 
+// Adding a command, step 4:
+// Add your new command here, you can specify the permissions required to run it,
+// the minimum number of args, the nature of args, aliases, etc.
+// And you're done! Run the bot, and your command will be called.
+// Remember to add usage-COMMAND to en.ftl to get a usage string.
 const CmdList : {
     [key in BotCommand]: CommandDefinition<key>
 } = {
@@ -38,6 +44,12 @@ const CmdList : {
     perms: ['isAdmin'],
     args: [],
     minArgs: 0,
+  },
+  setprefix: {
+    f: setprefix,
+    perms: ['isAdmin'],
+    args: ['string'],
+    minArgs: 1,
   },
 };
 

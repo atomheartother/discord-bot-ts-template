@@ -23,6 +23,10 @@ usage-lang =
     `{$prefix}lang [language]`
     List available languages, set a language for this server.
 
+usage-setprefix =
+    `{$prefix}setprefix [prefix]`
+    Set a new prefix for the bot to use on this server.
+
 # Errors
 ## Resolution errors
 noSuchMember =
@@ -65,6 +69,11 @@ langSuccess =
     {-b}Language changed successfully!{-b}
     I'll now speak English :o
 
+## Setprefix
+setPrefixSuccess =
+    {-b}New prefix set successfully!{-b}
+    You can now use `{$prefix}` to execute my commands.
+ 
 langHeader = {-b}List/set server language{-b}
 langIntro = Use `{$prefix}lang <language>` to set server language.
 i18nCredits = English, by Liz <3

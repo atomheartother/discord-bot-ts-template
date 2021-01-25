@@ -23,6 +23,10 @@ usage-lang =
     `{$prefix}lang [langue]`
     Afficher la liste des langues disponibles, ou modifier la langue du serveur.
 
+usage-setprefix =
+    `{$prefix}setprefix [préfixe]`
+    Modifier mon préfixe sur ce serveur.
+
 # Errors
 ## Resolution errors
 noSuchMember =
@@ -64,6 +68,11 @@ noSuchLang =
 langSuccess =
     {-b}Langue modifiée avec succès!{-b}
     Je parlerais maintenant français :P
+
+## Setprefix
+setPrefixSuccess =
+    {-b}Préfixe modifié avec succès!{-b}
+    Tu peux maintenant utiliser `{$prefix}` pour exécuter mes commandes.
 
 langHeader = {-b}Afficher/modifier la langue du serveur{-b}
 langIntro = Uilise `{$prefix}lang <langue>` pour changer la langue du serveur.

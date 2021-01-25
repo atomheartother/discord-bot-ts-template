@@ -14,11 +14,11 @@ export const createMemberQuery = async (
   return rowCount;
 };
 
-export const createMember = (
+export const SQLcreateMember = (
   memberid: string,
 ) : Promise<number> => createMemberQuery(pool(), memberid);
 
-export const rmMember = async (memberid : string) : Promise<number> => {
+export const SQLrmMember = async (memberid : string) : Promise<number> => {
   const { rowCount: members } = await pool().query(
     'DELETE FROM members WHERE memberid = $1',
     [memberid],

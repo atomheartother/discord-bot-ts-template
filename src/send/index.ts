@@ -26,6 +26,7 @@ export const ts = async (
   options: Record<string, FluentVariable> = {},
 ) : Promise<number> => {
   const { prefix } = await getGuildInfo(channel.guild.id);
+  // Automatically send the prefix in every translation because we use it so much.
   return send(channel, i18n('en', key, { ...options, prefix }));
 };
 

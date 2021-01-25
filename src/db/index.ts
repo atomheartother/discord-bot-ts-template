@@ -6,22 +6,24 @@
 // who should only import from this file.
 
 import { init } from './common';
-import { rmMember } from './members';
+import { SQLrmMember } from './members';
 import {
-  getGuildInfo as SQLgetGuildInfo,
+  SQLgetGuildInfo,
   GuildInfo,
-  setGuildInfo as SQLsetGuildInfo,
-  setLang as SQLsetLang,
+  SQLsetGuildInfo,
+  SQLsetLang,
+  SQLsetPrefix,
 } from './guilds';
 
 // Common
 export const initDatabase = init;
 
 // Members
-export const deleteMember = rmMember;
+export const deleteMember = SQLrmMember;
 
 // Guilds
 export const setLang = SQLsetLang;
+export const setPrefix = SQLsetPrefix;
 
 export const getGuildInfo = async (guildid: string): Promise<GuildInfo & {prefix: string}> => {
   let res: GuildInfo = await SQLgetGuildInfo(guildid);

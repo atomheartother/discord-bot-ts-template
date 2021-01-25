@@ -1,6 +1,6 @@
 import { pool, getInt } from './common';
 
-export const createGuild = async (guildId: string) : Promise<number> => {
+export const SQLcreateGuild = async (guildId: string) : Promise<number> => {
   const { rowCount } = await pool().query(
     'INSERT INTO guilds("guildId") VALUES($1) ON CONFLICT DO NOTHING',
     [guildId],
@@ -8,7 +8,7 @@ export const createGuild = async (guildId: string) : Promise<number> => {
   return rowCount;
 };
 
-export const rmGuild = async (guildId : string) : Promise<number> => {
+export const SQLrmGuild = async (guildId : string) : Promise<number> => {
   const { rowCount } = await pool().query(
     'DELETE FROM guilds WHERE "guildId" = $1',
     [guildId],
@@ -16,7 +16,7 @@ export const rmGuild = async (guildId : string) : Promise<number> => {
   return rowCount;
 };
 
-export const setLang = async (guildId : string, lang : string) : Promise<number> => {
+export const SQLsetLang = async (guildId : string, lang : string) : Promise<number> => {
   const { rows: [{ case: inserted }] } = await pool().query(
     `INSERT INTO guilds("guildId", lang)
     VALUES($1, $2)
@@ -28,14 +28,14 @@ export const setLang = async (guildId : string, lang : string) : Promise<number>
   return inserted;
 };
 
-export const getLang = async (guildId : string) : Promise<string> => {
+export const SQLgetLang = async (guildId : string) : Promise<string> => {
   const { rows: [lang] } = await pool().query(
     'SELECT lang FROM guilds WHERE "guildId"=$1', [guildId],
   );
   return lang;
 };
 
-export const setPrefix = async (guildId : string, prefix : string) : Promise<number> => {
+export const SQLsetPrefix = async (guildId : string, prefix : string) : Promise<number> => {
   const { rows: [{ case: inserted }] } = await pool().query(
     `INSERT INTO guilds("guildId", prefix)
     VALUES($1, $2)
@@ -53,7 +53,7 @@ export type GuildInfo = {
   announce: string | null;
 }
 
-export const getGuildInfo = async (guildId : string) : Promise<GuildInfo | undefined> => {
+export const SQLgetGuildInfo = async (guildId : string) : Promise<GuildInfo | undefined> => {
   const { rows: [data] } = await pool().query<GuildInfo>(
     `SELECT lang, prefix, ${getInt('announce')} FROM guilds WHERE "guildId"=$1 LIMIT 1`,
     [guildId],
@@ -61,7 +61,7 @@ export const getGuildInfo = async (guildId : string) : Promise<GuildInfo | undef
   return data;
 };
 
-export const setGuildInfo = async (
+export const SQLsetGuildInfo = async (
   id: string,
   {
     lang,
