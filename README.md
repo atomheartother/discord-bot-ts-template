@@ -20,7 +20,8 @@ It uses modern Javascript and sets you up with a bunch of good architecture so y
 - Run `docker-compose up -d --build`
 - That's it.
 
-## I don't wanna use docker because I hate cross-compatibility and easy deployment
+#### I don't wanna use docker!
+
 So don't use docker.
 - Set up a postgresql server
 - Make sure it's initialized using `dbVolume/init.db`
@@ -28,3 +29,11 @@ So don't use docker.
 - You'll have to set up something to pass the variables in `.env` to the bot
 - `yarn build` to build the bot
 - `yarn start` to start it
+
+### Possible questions
+
+#### Are there conditions to using this template?
+I've worked hard on this template, and it's the result of experimenting with multiple bots I have made myself. All I ask is you **respect the aGPL license on this code**, meaning that if you somehow improve/modify this code, you *open-source your code* so I and the rest of the community can benefit from it.
+
+#### Does this mean I have to open-source my whole bot if I use this template?
+No, you just have to open-source the parts of the bot that are currently there, if you modify them. For example you can add a command `secretCommand` and not open-source that, because the template bot doesn't have that command, but if you fix a bug in `setprefix` or you improve the command parser in `command/index.ts`, you are legally required to open-source those changes!
