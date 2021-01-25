@@ -1,6 +1,7 @@
 import {
   Message, MessageEmbed, TextChannel,
 } from 'discord.js';
+import log from '../utils/log';
 
 export const paginatedEmbedWithFormat = async <T = MessageEmbed>(
   channel: TextChannel,
@@ -27,7 +28,7 @@ export const paginatedEmbedWithFormat = async <T = MessageEmbed>(
         sentEmbed.edit({ embed: newEmbed.setFooter(`Page ${newPage + 1} / ${pages.length}`) });
         page = newPage;
       } catch (e) {
-        console.error('paginatedEmbed: Failed editing embed:', e);
+        log('paginatedEmbed: Failed editing embed.', channel);
       }
     };
 
