@@ -8,7 +8,7 @@ It uses modern Javascript and sets you up with a bunch of good architecture so y
 - A full command parser which handles multiple words surrounded by quotes, options and flags.
 - Per-server prefixes, languages and announcement channels.
 - A complex and extensible argument system that lets you define your own data types to send to your commands.
-- Industry-grade internationalization using Mozilla's [Project Fluent](https://www.projectfluent.org/play/).
+- Industry-grade internationalization using Mozilla's [Project Fluent](https://www.projectfluent.org/).
 - A ready-to-use database system with postgreSQL
 - Docker deployment out of the box.
 - A custom paginated embed system.
