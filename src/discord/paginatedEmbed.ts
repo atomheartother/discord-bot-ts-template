@@ -3,7 +3,9 @@ import {
 } from 'discord.js';
 import log from '../utils/log';
 
-// Takes in an array and divides it into equally-sized pages
+/**
+ * Takes in an array and divides it into equally-sized pages.
+ */
 export const paginateElems = <T>(
   elems: T[],
   pageSize = 5,
@@ -14,6 +16,11 @@ export const paginateElems = <T>(
     return [...acc.slice(0, acc.length - 1), [...acc[acc.length - 1], cur]];
   }, []);
 
+/**
+ * Posts a paginated embed, takes a formatting function which allows you
+ * to perform some action on your data and return the embed
+ * formatted the way you want.
+ */
 export const paginatedEmbedWithFormat = async <T = MessageEmbed>(
   channel: TextChannel,
   pages: T[],
@@ -65,6 +72,12 @@ export const paginatedEmbedWithFormat = async <T = MessageEmbed>(
   return sentEmbed;
 };
 
+/**
+ * Posts a paginated embed when provided a list of MessageEmbeds, each of which being a page.
+ *
+ * Import paginatedEmbedWithFormat for the possibility to use
+ * something else than MessageEmbeds as source data.
+ */
 export default (
   channel: TextChannel,
   pages: MessageEmbed[],
