@@ -3,6 +3,17 @@ import {
 } from 'discord.js';
 import log from '../utils/log';
 
+// Takes in an array and divides it into equally-sized pages
+export const paginateElems = <T>(
+  elems: T[],
+  pageSize = 5,
+): T[][] => elems.reduce((acc: T[][], cur) => {
+    if (acc.length < 1 || acc[acc.length - 1].length >= pageSize) {
+      return [...acc, [cur]];
+    }
+    return [...acc.slice(0, acc.length - 1), [...acc[acc.length - 1], cur]];
+  }, []);
+
 export const paginatedEmbedWithFormat = async <T = MessageEmbed>(
   channel: TextChannel,
   pages: T[],

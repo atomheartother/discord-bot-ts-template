@@ -3,29 +3,33 @@ import { CommandCallback } from './type';
 import { getGuildInfo, setLang } from '../db';
 import { eb, ts } from '../send';
 import i18n, { supportedLangs } from '../i18n';
+import { paginatedEmbedWithFormat, paginateElems } from '../discord/paginatedEmbed';
 
 const langCmd : CommandCallback<'lang'> = async (
   channel,
   [language],
 ) => {
   const { lang, prefix } = await getGuildInfo(channel.guild.id);
-  if (language === undefined) {
-    const embed = new MessageEmbed()
+  const formatLangs = (langs: string[]): MessageEmbed => {
+    const langListEmbed = new MessageEmbed()
       .setColor(0x0e7675)
       .setTitle(i18n(lang, 'langHeader'))
       .setDescription(i18n(lang, 'langIntro', { prefix }));
-    supportedLangs.forEach((l) => {
-      embed.addField(lang === l ? `${l}*` : l, i18n(l, 'i18nCredits'));
+    langs.forEach((l) => {
+      langListEmbed.addField(lang === l ? `[${l}]` : l, i18n(l, 'i18nCredits'));
     });
-    eb(channel, embed);
-  } else {
-    if (supportedLangs.indexOf(language) === -1) {
-      ts(channel, 'noSuchLang', { language });
-      return;
-    }
-    await setLang(channel.guild.id, language);
-    ts(channel, 'langSuccess');
+    return langListEmbed;
+  };
+  if (language === undefined) {
+    paginatedEmbedWithFormat<string[]>(channel, paginateElems(supportedLangs, 1), formatLangs);
+    return;
   }
+  if (supportedLangs.indexOf(language) === -1) {
+    ts(channel, 'noSuchLang', { language });
+    return;
+  }
+  await setLang(channel.guild.id, language);
+  ts(channel, 'langSuccess');
 };
 
 export default langCmd;
