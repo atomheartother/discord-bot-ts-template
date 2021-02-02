@@ -21,6 +21,7 @@ const langCmd : CommandCallback<'lang'> = async (
     return langListEmbed;
   };
   if (language === undefined) {
+    // Only make 1-element pages to show off the pagination system with our 2 elements.
     paginatedEmbedWithFormat<string[]>(channel, paginateElems(supportedLangs, 1), formatLangs);
     return;
   }
