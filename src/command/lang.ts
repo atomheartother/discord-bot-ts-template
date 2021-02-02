@@ -1,7 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 import { CommandCallback } from './type';
 import { getGuildInfo, setLang } from '../db';
-import { eb, ts } from '../send';
+import { ts } from '../send';
 import i18n, { supportedLangs } from '../i18n';
 import { paginatedEmbedWithFormat, paginateElems } from '../discord/paginatedEmbed';
 

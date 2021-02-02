@@ -32,5 +32,5 @@ export const ts = async (
 
 export const eb = (
   channel: TextChannel,
-  content: MessageOptions
-) : Promise<number> => send(channel, {...content, split: false});
+  content: MessageOptions,
+) : Promise<number> => send(channel, { ...content, split: false });

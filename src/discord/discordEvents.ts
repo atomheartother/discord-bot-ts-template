@@ -9,7 +9,6 @@ import { ts } from '../send';
 import command from '../command';
 import { deleteMember, getGuildInfo } from '../db';
 
-
 export const handleMessage = async (message : Message) : Promise<void> => {
   const {
     content, author, channel, mentions, guild,

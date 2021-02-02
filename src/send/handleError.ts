@@ -6,7 +6,6 @@ import log from '../utils/log';
 import { BotMessage } from '.';
 import i18n from '../i18n';
 
-
 const asyncTimeout = (
   f : () => Promise<number>,
   ms : number,

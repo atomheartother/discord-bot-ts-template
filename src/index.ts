@@ -12,5 +12,4 @@ const start = async () => {
   manager.spawn('auto', 15000, 60000);
 };
 
-
 start();
