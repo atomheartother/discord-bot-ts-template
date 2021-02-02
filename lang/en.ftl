@@ -2,22 +2,22 @@
 ## General
 ### This is displayed when the bot is pinged
 prefixUsage =
-    {-b}Hi! I'm {-bot-name}!{-b}
+    {-b}Hi! I'm {$botName}!{-b}
     My prefix on this server is `{$prefix}`.
     If you don't know how to use me, start with: `{$prefix}help`.
 
 ### This is in the help message header
-helpHeader = {-bot-name} - the future awesome bot
+helpHeader = {$botName} - the future awesome bot
 
 ### The main help message body, followed by usage
 helpIntro =
-    {-b}Hey, I'm {-bot-name}{-b}, I'm a template bot for people to start out making an awesome bot.
+    {-b}Hey, I'm {$botName}{-b}, I'm a template bot for people to start out making an awesome bot.
     Here's a few things you can do:
 
 ## Usage strings
 usage-announce =
     `{$prefix}announce <channel>`
-    Set the channel {-bot-name} uses to talk to the staff.
+    Set the channel {$botName} uses to talk to the staff.
 
 usage-lang =
     `{$prefix}lang [language]`

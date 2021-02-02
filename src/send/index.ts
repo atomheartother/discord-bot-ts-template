@@ -5,7 +5,7 @@ import i18n from '../i18n';
 import log from '../utils/log';
 import handleError from './handleError';
 
-export type BotMessage = MessageOptions | string;
+export type BotMessage = (MessageOptions & {split?: false}) | string;
 
 const send = async (channel : TextChannel, content: BotMessage) : Promise<number> => {
   try {
@@ -26,11 +26,11 @@ export const ts = async (
   options: Record<string, FluentVariable> = {},
 ) : Promise<number> => {
   const { prefix } = await getGuildInfo(channel.guild.id);
-  // Automatically send the prefix in every translation because we use it so much.
-  return send(channel, i18n('en', key, { ...options, prefix }));
+  // Add some common data to the translation
+  return send(channel, i18n('en', key, { ...options, prefix, botName: process.env.BOT_NAME }));
 };
 
 export const eb = (
   channel: TextChannel,
-  content: MessageOptions,
-) : Promise<number> => send(channel, content);
+  content: MessageOptions
+) : Promise<number> => send(channel, {...content, split: false});
