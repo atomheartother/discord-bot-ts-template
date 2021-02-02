@@ -36,6 +36,8 @@ Install `node` and `yarn` on your system and run `yarn` to install all packages 
 
 You can now edit the bot as you wish! I **highly** recommend using VSCode with the ESlint, Prettier and Fluent Syntax Highlighter extensions, they will make your editing experience much more pleasant.
 
+If you'd like to be able to keep your bot up-to-date with changes to this template, you can run `git remote rename origin template`. This will allow you, at any time, to run `git pull template master` and benefit from the latest changes.
+
 ### Code structure
 This bot is subdivided into modules. Each module focuses on one self-contained functionality of the bot. Each module is a subfolder in `src`. **As a general rule** modules should only call each other's `index.ts` declarations, there shouldn't be any searching in subdirectories.
 
