@@ -2,22 +2,22 @@
 ## General
 ### This is displayed when the bot is pinged
 prefixUsage =
-    {-b}Salut! Je suis {-bot-name}!{-b}
+    {-b}Salut! Je suis {$botName}!{-b}
     Mon préfixe sur ce serveur est `{$prefix}`.
     Si tu ne sais pas par où commencer, tu peux envoyer: `{$prefix}help`.
 
 ### This is in the help message header
-helpHeader = {-bot-name} - le futur super bot
+helpHeader = {$botName} - le futur super bot
 
 ### The main help message body, followed by usage
 helpIntro =
-    {-b}Salut, je suis {-bot-name}{-b}, je suis un bot générique à partir duquel un développeur peut créer un super bot.
+    {-b}Salut, je suis {$botName}{-b}, je suis un bot générique à partir duquel un développeur peut créer un super bot.
     Voici quelques choses que vous pouvez faire:
 
 ## Usage strings
 usage-announce =
     `{$prefix}announce <chaîne>`
-    Modifier la chaîne que {-bot-name} utilise pour parler au staff.
+    Modifier la chaîne que {$botName} utilise pour parler au staff.
 
 usage-lang =
     `{$prefix}lang [langue]`
