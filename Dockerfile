@@ -1,4 +1,4 @@
-FROM node:15.5.1-alpine as compiler
+FROM node:15.7.0-alpine as compiler
 # Compile in a separate container
 WORKDIR /app
 
@@ -9,7 +9,7 @@ RUN yarn install
 COPY . .
 RUN yarn build
 
-FROM node:15.5.1-alpine
+FROM node:15.7.0-alpine
 
 # Don't run Docker as root!
 RUN addgroup --gid 10001 nonroot && adduser --gecos "Bot user" --uid 10000 --ingroup nonroot --home /home/nonroot --disabled-password nonroot
