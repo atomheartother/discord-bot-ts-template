@@ -16,6 +16,7 @@ It uses modern Javascript and sets you up with a bunch of good architecture so y
 
 ## Running the bot
 
+- Clone the repository using git,
 - Install Docker and `docker-compose`
 - Copy `.example.env` to a new file called `.env` and fill in the database password & discord API key.
 - Run `docker-compose up -d --build`
