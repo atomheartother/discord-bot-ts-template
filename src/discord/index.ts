@@ -36,7 +36,13 @@ export const user = () : ClientUser => dClient.user;
 
 export const getChannel = (id: string) : Channel => dClient.channels.resolve(id);
 
-export const getGuild = (id: string) : Guild => dClient.guilds.resolve(id);
+// Async because it's not certain the guild is on this shard.
+export const getGuild = async (id: string) : Promise<Guild | null> => {
+  const res = await dClient.shard.broadcastEval(
+    `this.guilds.get("${id}")`,
+  );
+  return res.find((r) => !!r);
+};
 
 export const getUser = (id: string) : User => dClient.users.resolve(id);
 
