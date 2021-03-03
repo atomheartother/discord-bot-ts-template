@@ -11,9 +11,11 @@ we can define a custom type here and make sure the message
 arrives already parsed in the command.
 */
 
-import { TextChannel, GuildMember, Channel } from 'discord.js';
+import {
+  TextChannel, GuildMember, Channel, Guild,
+} from 'discord.js';
 import { ts } from '../send';
-import { getMemberFromMention, getChannelFromMention } from '../discord';
+import { getMemberFromMention, getChannelFromMention, getGuild } from '../discord';
 
 // We export our argument strings as well as every type that can result from them
 export type Argument =
@@ -21,8 +23,9 @@ export type Argument =
   | 'rest'
   | 'member'
   | 'string'
-  | 'channel';
-export type PossibleArgumentResults = string[] | GuildMember | string | Channel;
+  | 'channel'
+  | 'guild'
+export type PossibleArgumentResults = string[] | GuildMember | string | Channel | Guild;
 
 // This table associates string literal types with argument parsing results
 export type ArgumentResult<T extends Argument> =
@@ -30,6 +33,7 @@ export type ArgumentResult<T extends Argument> =
     T extends 'member' ? GuildMember :
     T extends 'rest' ? string[] :
     T extends 'channel' ? Channel :
+    T extends 'guild' ? Guild :
     string;
 
 type ParseArgumentFunction<T extends Argument> = (
@@ -52,6 +56,14 @@ const getChannel : ParseArgumentFunction<'channel'> = async (channel, name) => {
   return res;
 };
 
+const guild : ParseArgumentFunction<'guild'> = async (channel, id) => {
+  const g = await getGuild(id);
+  if (!g) {
+    ts(channel, 'noSuchGuild', { id });
+  }
+  return g;
+};
+
 // This returns all the arguments passed to the command
 const all : ParseArgumentFunction<'all'> = async (channel, str, allArgs) => allArgs;
 // This returns the rest of the arguments passed to the function after this point
@@ -67,6 +79,7 @@ const argumentParser : {
   string,
   member,
   channel: getChannel,
+  guild,
 };
 
 export default argumentParser;
