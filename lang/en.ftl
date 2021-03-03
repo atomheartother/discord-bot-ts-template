@@ -37,6 +37,10 @@ noSuchChannel =
     {-b}I couldn't find a channel from `{$name}`.{-b}
     Maybe I can't see that channel, try and make sure I have the proper rights.
 
+noSuchGuild =
+    {-b}I can't find a server with ID `{$id}`.{-b}
+    It's possible I'm not in that server, or it doesn't exist!
+
 ## Permission fails
 isAdminPermFail =
     {-b}You're not an admin!{-b}
