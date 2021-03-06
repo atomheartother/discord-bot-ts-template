@@ -1,5 +1,5 @@
 import {
-  TextChannel, Message, Channel, Role,
+  TextChannel, Message, Role,
 } from 'discord.js';
 import { Permission } from './perms';
 import { Argument } from './validateArgs';
