@@ -32,6 +32,7 @@ export const getGuildInfo = async (guildid: string): Promise<GuildInfo & {prefix
       announce: null,
       prefix: null,
       lang: null,
+      modRole: null,
     };
   }
   if (!res.prefix) {

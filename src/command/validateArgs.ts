@@ -12,10 +12,15 @@ arrives already parsed in the command.
 */
 
 import {
-  TextChannel, GuildMember, Channel, Guild,
+  TextChannel, GuildMember, Channel, Guild, Role,
 } from 'discord.js';
 import { ts } from '../send';
-import { getMemberFromMention, getChannelFromMention, getGuild } from '../discord';
+import {
+  getMemberFromMention, getChannelFromMention, getGuild, getRoleFromMention,
+} from '../discord';
+import {
+  AllConfigVerbs, BotCommand, ConfigVerb, FunctionParams,
+} from './type';
 
 // We export our argument strings as well as every type that can result from them
 export type Argument =
@@ -25,7 +30,10 @@ export type Argument =
   | 'string'
   | 'channel'
   | 'guild'
-export type PossibleArgumentResults = string[] | GuildMember | string | Channel | Guild;
+  | 'configVerb'
+  | 'role'
+
+export type PossibleArgumentResults = string[] | GuildMember | string | Channel | Guild | Role;
 
 // This table associates string literal types with argument parsing results
 export type ArgumentResult<T extends Argument> =
@@ -34,6 +42,8 @@ export type ArgumentResult<T extends Argument> =
     T extends 'rest' ? string[] :
     T extends 'channel' ? Channel :
     T extends 'guild' ? Guild :
+    T extends 'configVerb' ? ConfigVerb :
+    T extends 'role' ? Role :
     string;
 
 type ParseArgumentFunction<T extends Argument> = (
@@ -64,6 +74,22 @@ const guild : ParseArgumentFunction<'guild'> = async (channel, id) => {
   return g;
 };
 
+const configVerb : ParseArgumentFunction<'configVerb'> = async (channel, verb) => {
+  if (AllConfigVerbs.includes(verb.toLowerCase() as ConfigVerb)) {
+    return verb.toLowerCase() as ConfigVerb;
+  }
+  return null;
+};
+
+const role : ParseArgumentFunction<'role'> = async (channel, roleMention) => {
+  const r = getRoleFromMention(channel.guild, roleMention);
+  if (!r) {
+    ts(channel, 'noSuchRole', { roleMention });
+    return null;
+  }
+  return r;
+};
+
 // This returns all the arguments passed to the command
 const all : ParseArgumentFunction<'all'> = async (channel, str, allArgs) => allArgs;
 // This returns the rest of the arguments passed to the function after this point
@@ -80,6 +106,24 @@ const argumentParser : {
   member,
   channel: getChannel,
   guild,
+  configVerb,
+  role,
 };
 
-export default argumentParser;
+export const validate = async <T extends BotCommand | ConfigVerb>(
+  channel: TextChannel, cmdArgs: Argument[], args: string[],
+): Promise<FunctionParams<T> | null> => {
+  // Typescript doesn't understand what we're trying to do
+  // if we use generics, so we type the return results to
+  // every single argument possible then cast it once everything is
+  // checked. This is a hack but it works.
+  const resolved = await Promise.all<PossibleArgumentResults>(
+    cmdArgs.map(
+      (arg, i) => argumentParser[arg](channel, args[i], args, i),
+    ),
+  );
+  if (resolved.findIndex((arg) => !arg) !== -1) return null;
+  return resolved as FunctionParams<T>;
+};
+
+export default validate;

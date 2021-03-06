@@ -1,11 +1,12 @@
-import { CommandCallback } from './type';
-import { getGuildInfo, setGuildInfo } from '../db';
-import { ts } from '../send';
+import { TextChannel } from 'discord.js';
+import { getGuildInfo, setGuildInfo } from '../../db';
+import { ts } from '../../send';
+import { FunctionParams } from '../type';
 
-const announce : CommandCallback<'announce'> = async (
-  channel,
-  [targetChannel],
-) => {
+const announce = async (
+  channel: TextChannel,
+  [targetChannel]: FunctionParams<'announce'>,
+): Promise<void> => {
   if (targetChannel.type !== 'text') {
     ts(channel, 'notTextChannel', { channel: targetChannel.id });
     return;

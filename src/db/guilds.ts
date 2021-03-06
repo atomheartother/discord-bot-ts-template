@@ -1,5 +1,12 @@
 import { pool, getInt } from './common';
 
+export type GuildInfo = {
+  lang: string | null;
+  prefix: string | null;
+  announce: string | null;
+  modRole: string | null;
+}
+
 export const SQLcreateGuild = async (guildId: string) : Promise<number> => {
   const { rowCount } = await pool().query(
     'INSERT INTO guilds("guildId") VALUES($1) ON CONFLICT DO NOTHING',
@@ -46,12 +53,6 @@ export const SQLsetPrefix = async (guildId : string, prefix : string) : Promise<
   );
   return inserted;
 };
-
-export type GuildInfo = {
-  lang: string | null;
-  prefix: string | null;
-  announce: string | null;
-}
 
 export const SQLgetGuildInfo = async (guildId : string) : Promise<GuildInfo | undefined> => {
   const { rows: [data] } = await pool().query<GuildInfo>(

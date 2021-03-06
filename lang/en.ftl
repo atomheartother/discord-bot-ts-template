@@ -41,6 +41,10 @@ noSuchGuild =
     {-b}I can't find a server with ID `{$id}`.{-b}
     It's possible I'm not in that server, or it doesn't exist!
 
+noSuchRole =
+    {-b}I can't find a role from `{$roleMention}`.{-b}
+    You can use the role ID, or mention it.
+
 ## Permission fails
 isAdminPermFail =
     {-b}You're not an admin!{-b}

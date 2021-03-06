@@ -6,17 +6,15 @@
 
 import { TextChannel, Message } from 'discord.js';
 import permisssionList from './perms';
-import argumentParser, { PossibleArgumentResults } from './args';
+import validate from './validateArgs';
 import help from './help';
 import { ts } from '../send';
-import announce from './announce';
-import setprefix from './setprefix';
 
 import { getMemberFromId } from '../discord';
 import {
   BotCommand, CommandDefinition, CommandOptions, FunctionParams,
 } from './type';
-import lang from './lang';
+import config from './config';
 
 // Adding a command, step 4:
 // Add your new command here, you can specify the permissions required to run it,
@@ -33,23 +31,12 @@ const CmdList : {
     minArgs: 0,
     aliases: ['h'],
   },
-  announce: {
-    f: announce,
+  config: {
+    f: config,
     perms: ['isAdmin'],
-    args: ['channel'],
-    minArgs: 1,
-  },
-  lang: {
-    f: lang,
-    perms: ['isAdmin'],
-    args: [],
-    minArgs: 0,
-  },
-  setprefix: {
-    f: setprefix,
-    perms: ['isAdmin'],
-    args: ['string'],
-    minArgs: 1,
+    args: ['configVerb', 'rest'], // get the config verb, then the rest of the arguments as a string[]
+    minArgs: 1, // We should at least have a verb
+    aliases: ['conf'],
   },
 };
 
@@ -122,18 +109,8 @@ const runCommand = async (
     ts(channel, `usage-${verb}`, { cmd: verb });
     return;
   }
-  // Typescript doesn't understand the typing of commandArgs,
-  // as a hack we type it as every possible argument, strong with the
-  // knowledge that they ARE the right type. We will cast them later.
-  const commandArgs = await Promise.all<PossibleArgumentResults>(
-    cmd.args.map(
-      (arg, i) => argumentParser[arg](channel, args[i], args, i),
-    ),
-  );
-  // Check args
-  if (commandArgs.findIndex((arg) => !arg) !== -1) return;
+  const commandArgs = await validate<typeof verb>(channel, cmd.args, args);
   // Run the command, recombining the lines from before
-  // We cast the command arguments.
   cmd.f(
     channel,
     (commandArgs.length > 0 ? commandArgs : args) as FunctionParams<typeof verb>,

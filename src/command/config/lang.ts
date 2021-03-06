@@ -1,14 +1,14 @@
-import { MessageEmbed } from 'discord.js';
-import { CommandCallback } from './type';
-import { getGuildInfo, setLang } from '../db';
-import { ts } from '../send';
-import i18n, { supportedLangs } from '../i18n';
-import { paginatedEmbedWithFormat, paginateElems } from '../discord/paginatedEmbed';
+import { MessageEmbed, TextChannel } from 'discord.js';
+import { FunctionParams } from '../type';
+import { getGuildInfo, setLang } from '../../db';
+import { ts } from '../../send';
+import i18n, { supportedLangs } from '../../i18n';
+import { paginatedEmbedWithFormat, paginateElems } from '../../discord/paginatedEmbed';
 
-const langCmd : CommandCallback<'lang'> = async (
-  channel,
-  [language],
-) => {
+const langCmd = async (
+  channel: TextChannel,
+  [language]: FunctionParams<'lang'>,
+): Promise<void> => {
   const { lang, prefix } = await getGuildInfo(channel.guild.id);
   const formatLangs = (langs: string[]): MessageEmbed => {
     const langListEmbed = new MessageEmbed()
