@@ -8,10 +8,9 @@ const help : CommandCallback<'help'> = async (channel) : Promise<void> => {
   const { lang, prefix } = await getGuildInfo(channel.guild.id);
   const embed = new MessageEmbed()
     .setColor(0x0e7675)
-    .setTitle(i18n(lang, 'helpHeader'))
-    .setDescription(i18n(lang, 'helpIntro'))
-    .addField(`${prefix}announce`, i18n(lang, 'usage-announce', { prefix }))
-    .addField(`${prefix}lang`, i18n(lang, 'usage-lang', { prefix }));
+    .setTitle(i18n(lang, 'helpHeader', { botName: process.env.BOT_NAME }))
+    .setDescription(i18n(lang, 'helpIntro', { botName: process.env.BOT_NAME }))
+    .addField(`${prefix}config`, i18n(lang, 'usage-config', { prefix }));
   eb(channel, { embed });
 };
 

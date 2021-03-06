@@ -15,16 +15,24 @@ helpIntro =
     Here's a few things you can do:
 
 ## Usage strings
+usage-config =
+    `{$prefix}config <announce|lang|prefix|modrole>`
+    Configure your server. Use `config X` to learn more about how to use a specific subcommand.
+
 usage-announce =
-    `{$prefix}announce <channel>`
+    `{$prefix}config announce <channel>`
     Set the channel {$botName} uses to talk to the staff.
 
 usage-lang =
-    `{$prefix}lang [language]`
+    `{$prefix}config lang [language]`
     List available languages, set a language for this server.
 
-usage-setprefix =
-    `{$prefix}setprefix [prefix]`
+usage-prefix =
+    `{$prefix}config prefix <prefix>`
+    Set a new prefix for the bot to use on this server.
+
+usage-modrole =
+    `{$prefix}config modrole <role>`
     Set a new prefix for the bot to use on this server.
 
 # Errors
