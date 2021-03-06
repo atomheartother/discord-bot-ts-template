@@ -1,4 +1,4 @@
-import { DiscordAPIError } from 'discord.js';
+import { DiscordAPIError, Message } from 'discord.js';
 import {
   getInfo, SupportedChannel, getName, getOwnerDm,
 } from '../channel';
@@ -7,9 +7,9 @@ import { BotMessage } from '.';
 import i18n from '../i18n';
 
 const asyncTimeout = (
-  f : () => Promise<number>,
+  f : () => Promise<Message>,
   ms : number,
-) : Promise<number> => new Promise(
+) : Promise<Message> => new Promise(
   (resolve) => setTimeout(() => {
     resolve(f());
   }, ms),
@@ -23,7 +23,7 @@ const handleDiscordPostError = async (
   error : DiscordAPIError,
   msg : BotMessage,
   errorCount = 1,
-) : Promise<number> => {
+) : Promise<Message> => {
   const errCode = error.code || error.httpStatus;
   // We keep fucking up. Stop trying.
   if (errorCount > 2) {
@@ -31,7 +31,7 @@ const handleDiscordPostError = async (
       `${errCode}: Discord servers failed receiving message ${errorCount} times, giving up`,
       channel,
     );
-    return 3;
+    return null;
   }
   // New message to send
   let newMsg = msg;
@@ -39,8 +39,6 @@ const handleDiscordPostError = async (
   let logMsg = '';
   // delay before sending
   let delay = 0;
-  // Return code in case of success
-  let retCode = 0;
   // channel to post to
   let channelToPostIn = 'best';
   if (
@@ -49,7 +47,6 @@ const handleDiscordPostError = async (
           || (errCode === undefined && error.name === 'TypeError')
   ) {
     // Either the channel was deleted or Discord 404'd trying to access twitter data.
-    retCode = 2;
     channelToPostIn = 'none';
     log(error);
     log(msg);
@@ -61,7 +58,6 @@ const handleDiscordPostError = async (
           || errCode === 50004
           || errCode === 40001
   ) {
-    retCode = 2;
     // Discord MissingPermissions error
     // Try to notify the user that something is wrong
     logMsg = `Tried to post in \`${getInfo(channel)}\` but lacked permissions: ${errCode} ${
@@ -87,7 +83,6 @@ const handleDiscordPostError = async (
   } else if (errCode === 50007) {
     logMsg = 'This user won\'t accept DMs from us';
     channelToPostIn = 'none';
-    retCode = 4;
   } else {
     logMsg = `Posting message failed (${errCode} ${error.name}): ${
       error.message
@@ -97,17 +92,18 @@ const handleDiscordPostError = async (
   }
   log(`${logMsg} (attempt #${errorCount})`, channel);
   if (channelToPostIn === 'none') {
-    return 1;
+    return null;
   }
   const targetChannel = channelToPostIn === 'ownerDms' ? await getOwnerDm(channel) : channel;
   if (!targetChannel || !targetChannel.id) {
     log("Couldn't find a way to send error notification", channel);
-    return 4;
+    return null;
   }
   return asyncTimeout(async () => {
     try {
-      await targetChannel.send(newMsg);
+      const m = await targetChannel.send(newMsg);
       log('Posted message successfully', targetChannel);
+      return m;
     } catch (err) {
       return handleDiscordPostError(
         targetChannel,
@@ -116,7 +112,6 @@ const handleDiscordPostError = async (
         errorCount + 1,
       );
     }
-    return retCode;
   }, delay);
 };
 
