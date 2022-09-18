@@ -1,4 +1,7 @@
+**NOTE:** This but currently is not compatible with slash commands, which are required to make a large-scale bot. I need to update it when i have time. Do not use this for a large-scale project until this notice is removed from the readme.
+
 # TemplateBot
+
 Templatebot is a bot that's a template for a large-scale Typescript + NodeJS bot.
 
 It uses modern Javascript and sets you up with a bunch of good architecture so your bot can grow without being too much of a mess.
